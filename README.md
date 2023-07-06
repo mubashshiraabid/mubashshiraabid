@@ -1,0 +1,5 @@
+- 👋 Hi, I’m Mubashshira Abid
+- 👀 I’m interested in data anlytics
+- 🌱 I’m currently learning predictive modelling
+- 💞️ I’m looking to collaborate on data analytics projects
+- 📫 Reach me via LinkedIn https://www.linkedin.com/in/mubashshira-abid-428849a7/
