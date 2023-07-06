@@ -1,0 +1,64 @@
+MatLab Portfolio
+
+% 1. Identify how long the flights are expected to take in minutes?
+scheduled=flightsJan.CRS_ELAPSED_TIME; 
+% 2. How long does a flight actually take compared to the schedule time?
+actual=flightsJan.ACTUAL_ELAPSED_TIME;
+difference=actual-scheduled;
+% 3. Identify which variable explain the difference between the actual and schedule elapsed time?
+"c1=corr(flightsJan.ARR_DELAY,difference,""rows"",""complete"");"
+"c2=corr(flightsJan.DEP_DELAY,difference,""rows"",""complete"");"
+"c3=corr(flightsJan.TAXI_IN,difference,""rows"",""complete"");"
+"c4=corr(flightsJan.TAXI_OUT,difference,""rows"",""complete"");"
+%Taxi out has the highest correlation hence it can best explain the difference between actual and scheduled elapsed time.
+% 4. Identify the number of flights cancelled?
+cancelled=sum(flightsJan.CANCELLED);
+% 5. Idenfify which origin has the highest and lowest flights cancelled?
+"x=flightsJan(flightsJan.CANCELLED==1,:);"
+"gs1=groupsummary(x,""ORIGIN"");"
+"sort1=sortrows(gs1,'GroupCount','ascend');"
+%lowest flights cancelled:'CEC';'PBG';'AVL';'MMH';'SMX';'YUM';'HDN';'PIH';'ITO';'BJI';'OTH';'ECP';'ADQ';'BLI';'FAI';'OTZ';'PSG';'YAK';'CRW';'FAY';'MEI';'AEX';'PHF';'BQK';'MQT'
+%highest flights cancelled: 'ORD'
+% 6. Idenfify which designation has the highest and lowest flights cancelled?
+"gs2=groupsummary(x,""DEST"");"
+"sort2=sortrows(gs2,'GroupCount','ascend');"
+%lowest flights cancelled:'PBG';'IAG';'IMT';'LAR';'RHI';'YUM';'CEC';'HLN';'MMH';'OTH';'PIH';'ITO';'KOA';'LIH';'ECP';'ADQ';'BLI';'OME';'WRG';'GNV';'TRI';'FAY';'AEX';'PIB';'BQK';'ABY';'OAJ'
+%highest flights cancelled:'ORD'
+"% 7. In the flights data for the month of January, which variable is most correlated with the variable ARRIVAL_DELAY?"
+"c5=corr(flightsJan.DEP_DELAY,flightsJan.ARR_DELAY,""rows"",""complete"");"
+"c6=corr(flightsJan.TAXI_IN,flightsJan.ARR_DELAY,""rows"",""complete"");"
+"c7=corr(flightsJan.TAXI_OUT,flightsJan.ARR_DELAY,""rows"",""complete"");"
+%Departure delay is the most correlated with arrival delay.
+"% 8. If a flight is cancelled, then the table variable CANCELLATION_CODE, contains a letter code specifying the reason. What was the most common reason for cancelled flights in January?"
+"gs3=groupsummary(x,""CANCELLATION_CODE"");"
+"sort3=sortrows(gs3,'GroupCount','descend');"
+%B was the most common reason for cancelled flights in January.
+% 9. Identify the distribution of the variable (difference between the actual and schedule elapsed time)?
+"% mean, standard deviation, skewness and kurtosis (interpret the results)"
+m=nanmean(difference);
+stdev=nanstd(difference);
+skew=skewness(difference);
+kurt=kurtosis(difference);
+"%The mean is -3.8761, which means the average actual time taken by a flight was less than the average scheduled time."
+"%The standard deviation is 13.6610, which means that the actual flight times and scheduled flight times for a set of flights have a typical difference of approximately 13.6610 units."
+%The skewness is 1.2847 which means the distribution is positively skewed.
+%the kurtosis is 10.8787 which means the distribution has a higher peak and heavier tails compared to a normal distribution.
+% 10. Develop a box plot (difference between the actual and schedule elapsed time)?
+box=boxplot(difference);
+%The box plot shows that there are many outliers in the data.
+% 11. Which origin airport had the greatest number of scheduled flights? Provide your answer using the corresponding 3-letter origin airport code.
+"gs4=groupsummary(flightsJan,""ORIGIN"");"
+"sort4=sortrows(gs4,'GroupCount','descend');"
+%ATL has the greatest number of scheduled flights
+% 12. From which airport do departing flights fly the shortest average distance?
+"gs5=groupsummary(flightsJan,'ORIGIN','MEAN','DISTANCE');"
+"sort5=sortrows(gs5,'mean_DISTANCE','ascend');"
+%WRG airport
+% 13. What type of distribution do you see when creating a histogram of the TAXI_OUT variable in the flights dataset? 
+h=hist(flightsJan.TAXI_OUT);
+%A positively skewed distribution can be seen.
+"% 14. Take a origin or destination, identify what is the reason for most cancellation of flights their? "
+"gs3=groupsummary(x,""CANCELLATION_CODE"");"
+"sort3=sortrows(gs3,'GroupCount','descend');"
+%B was the most common reason for cancelled flights in January.
+end
